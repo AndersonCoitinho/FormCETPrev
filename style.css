@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-size: 16px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+form {
+    width: 800px;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 1.1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: inline-block;
+    width: 25%;
+    margin-bottom: 1.2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="date"] {
+    width: 70%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        margin-top: .5rem;
+        font-size: 1.5rem;
+    }
+
+    form {
+        width: 80%; /* Reduza a largura do formulário */
+        font-size: 0.8rem;
+    }
+
+    label {
+        width: 100%; /* Ocupa a largura total */
+        display: block;
+        margin-bottom: .2rem;
+    }
+
+    input[type="text"], input[type="date"] {
+        width: 90%; /* Ocupa a largura total */
+    }
+}
