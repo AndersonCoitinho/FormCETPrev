@@ -19,6 +19,13 @@ $config = [
 ];
 $s3 = new S3Client($config);
 
+// VIZUALIZAR OS POST
+/*
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
+*/
+
 /* ARMAZENA OS DADOS */
 $nome = mb_strtoupper($_POST["nome"], 'UTF-8');
 $nacionalidade = mb_strtoupper($_POST["nacionalidade"], 'UTF-8');
@@ -28,15 +35,48 @@ $fone = mb_strtoupper($_POST["fone"], 'UTF-8');
 $fone_recado = mb_strtoupper($_POST["fone_recado"], 'UTF-8');
 $cpf = mb_strtoupper($_POST["cpf"], 'UTF-8');
 $rg = mb_strtoupper($_POST["rg"], 'UTF-8');
-$data_nascimento = mb_strtoupper($_POST["data_nascimento"], 'UTF-8');
 $endereco = mb_strtoupper($_POST["endereco"], 'UTF-8');
 $bairro = mb_strtoupper($_POST["bairro"], 'UTF-8');
 $cep = mb_strtoupper($_POST["cep"], 'UTF-8');
 $cidade = mb_strtoupper($_POST["cidade"], 'UTF-8');
 $estado = mb_strtoupper($_POST["estado"], 'UTF-8');
+$data_nascimento = mb_strtoupper($_POST["data_nascimento"], 'UTF-8');
 $data = mb_strtoupper($_POST["data"], 'UTF-8');
 $dataFormatadaNascimento = date("d/m/Y", strtotime($data_nascimento));
 $dataFormatadaContrato = date("d/m/Y", strtotime($data));
+
+$consultoria = mb_strtoupper($_POST["consultoria"], 'UTF-8');
+$responsavel = isset($_POST['responsavel']) ? mb_strtoupper($_POST['responsavel'], 'UTF-8') : '';
+$cpfResponsavel = isset($_POST['cpfResponsavel']) ? mb_strtoupper($_POST['cpfResponsavel'], 'UTF-8') : '';
+$profissaoResponsavel = isset($_POST['profissaoResponsavel']) ? mb_strtoupper($_POST['profissaoResponsavel'], 'UTF-8') : '';
+$consultor = isset($_POST['consultor']) ? mb_strtoupper($_POST['consultor'], 'UTF-8') : '';
+
+$profissaoEpoca = mb_strtoupper($_POST["profissaoEpoca"], 'UTF-8');
+$funcaoDesempenhava = mb_strtoupper($_POST["funcaoDesempenhava"], 'UTF-8');
+$dataAcidente = mb_strtoupper($_POST["dataAcidente"], 'UTF-8'); 
+$afastouInss = isset($_POST['afastouInss']) ? mb_strtoupper($_POST['afastouInss'], 'UTF-8') : '';
+$senhaInss = mb_strtoupper($_POST["senhaInss"], 'UTF-8');
+$hospital = mb_strtoupper($_POST["hospital"], 'UTF-8');
+$detalhesAcidente = mb_strtoupper($_POST["detalhesAcidente"], 'UTF-8');
+$membrosAfetados = mb_strtoupper($_POST["membrosAfetados"], 'UTF-8');
+$tipoAcidente = isset($_POST['tipoAcidente']) ? mb_strtoupper($_POST['tipoAcidente'], 'UTF-8') : '';
+
+$rgoucnh = isset($_POST['rgoucnh']) ? $_POST['rgoucnh'] : '';
+$cpfEntregue = isset($_POST['cpfEntregue']) ? $_POST['cpfEntregue'] : '';
+$residencia = isset($_POST['residencia']) ? $_POST['residencia'] : '';
+$cnis = isset($_POST['cnis']) ? $_POST['cnis'] : '';
+$ctps = isset($_POST['ctps']) ? $_POST['ctps'] : '';
+$extrato = isset($_POST['extrato']) ? $_POST['extrato'] : '';
+$laudoMedicoInss = isset($_POST['laudoMedicoInss']) ? $_POST['laudoMedicoInss'] : '';
+$copiaprocesso = isset($_POST['copiaprocesso']) ? $_POST['copiaprocesso'] : '';
+$raiox = isset($_POST['raiox']) ? $_POST['raiox'] : '';
+$ressonancia = isset($_POST['ressonancia']) ? $_POST['ressonancia'] : '';
+$exames = isset($_POST['exames']) ? $_POST['exames'] : '';
+$prontuario = isset($_POST['prontuario']) ? $_POST['prontuario'] : '';
+$laudoMedico = isset($_POST['laudoMedico']) ? $_POST['laudoMedico'] : '';
+$cat = isset($_POST['cat']) ? $_POST['cat'] : '';
+$bo = isset($_POST['bo']) ? $_POST['bo'] : '';
+
 
 
 $timestamp = strtotime($data); // Converte a data para um timestamp
@@ -136,6 +176,37 @@ foreach ($documentos as $documento) {
     $templateProcessor->setValue('{{cidade}}', $cidade);
     $templateProcessor->setValue('{{estado}}', $estado);
     $templateProcessor->setValue('{{data}}', $dataPorExtensoString);
+
+    $templateProcessor->setValue('{{consultor}}', $consultor);
+    $templateProcessor->setValue('{{consultoria}}', $consultoria);
+    $templateProcessor->setValue('{{profissaoEpoca}}', $profissaoEpoca);
+    $templateProcessor->setValue('{{funcaoDesempenhava}}', $funcaoDesempenhava);
+    $templateProcessor->setValue('{{dataAcidente}}', $dataAcidente);
+    $templateProcessor->setValue('{{afastouInss}}', $afastouInss);
+    $templateProcessor->setValue('{{senhaInss}}', $senhaInss);
+    $templateProcessor->setValue('{{hospital}}', $hospital);
+    $templateProcessor->setValue('{{detalhesAcidente}}', $detalhesAcidente);
+    $templateProcessor->setValue('{{membrosAfetados}}', $membrosAfetados);
+    $templateProcessor->setValue('{{tipoAcidente}}', $tipoAcidente);
+    $templateProcessor->setValue('{{responsavel}}', $responsavel);
+    $templateProcessor->setValue('{{cpfResponsavel}}', $cpfResponsavel);
+    $templateProcessor->setValue('{{profissaoResponsavel}}', $profissaoResponsavel);
+
+    $templateProcessor->setValue('{{rgoucnh}}', $rgoucnh);
+    $templateProcessor->setValue('{{cpfEntregue}}', $cpfEntregue);
+    $templateProcessor->setValue('{{residencia}}', $residencia);
+    $templateProcessor->setValue('{{cnis}}', $cnis);
+    $templateProcessor->setValue('{{ctps}}', $ctps);
+    $templateProcessor->setValue('{{extrato}}', $extrato);
+    $templateProcessor->setValue('{{laudoMedicoInss}}', $laudoMedicoInss);
+    $templateProcessor->setValue('{{copiaprocesso}}', $copiaprocesso);
+    $templateProcessor->setValue('{{raiox}}', $raiox);
+    $templateProcessor->setValue('{{ressonancia}}', $ressonancia);
+    $templateProcessor->setValue('{{exames}}', $exames);
+    $templateProcessor->setValue('{{prontuario}}', $prontuario);
+    $templateProcessor->setValue('{{laudoMedico}}', $laudoMedico);
+    $templateProcessor->setValue('{{cat}}', $cat);
+    $templateProcessor->setValue('{{bo}}', $bo);
     
     // Salve o documento final com um nome único
     $templateProcessor->saveAs($documento['saida']);
@@ -161,7 +232,7 @@ foreach ($documentos as $documento) {
 <body>
     <h1>Documentos Gerados:</h1>
     <?php foreach ($documentos as $documento): ?>
-        <p>Arquivo: <?php echo $documento['titulo']; ?><a href="https://cadastroadv.s3.amazonaws.com/datas/<?php echo $documento['bucket']; ?>" download><br>Download</a></p>
+        <p>Arquivo: <?php echo $documento['titulo']; ?><a href="<?php echo $documento['saida']; ?>" download><br>Download</a></p>
     <?php endforeach; ?>
     <h2>Para a Planilha:</h2>
 <table border="1">
@@ -180,6 +251,7 @@ foreach ($documentos as $documento) {
         <td>CEP</td>
         <td>Data Nascimento</td>
         <td>Data Contrato</td>
+        <td>Consultor</td>
     </tr>
     <tr>
             <td id="nome" data-copy="<?php echo $nome; ?>"><?php echo $nome; ?></td>
@@ -196,6 +268,7 @@ foreach ($documentos as $documento) {
             <td id="cep" data-copy="<?php echo $cep; ?>"><?php echo $cep; ?></td>
             <td id="dataFormatadaNascimento" data-copy="<?php echo $dataFormatadaNascimento; ?>"><?php echo $dataFormatadaNascimento; ?></td>
             <td id="dataFormatadaContrato" data-copy="<?php echo $dataFormatadaContrato; ?>"><?php echo $dataFormatadaContrato; ?></td>
+            <td id="consultor" data-copy="<?php echo $consultor; ?>"><?php echo $consultor; ?></td>
     </tr>
 </table>
 
@@ -216,7 +289,9 @@ foreach ($documentos as $documento) {
             document.getElementById('estado').textContent,
             document.getElementById('cep').textContent,
             document.getElementById('dataFormatadaNascimento').textContent,
-            document.getElementById('dataFormatadaContrato').textContent
+            document.getElementById('dataFormatadaContrato').textContent,
+            '',
+            document.getElementById('consultor').textContent,
         ];
 
         var dadosExcel = campos.join('\t');
