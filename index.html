@@ -38,6 +38,11 @@
                     cfpElement.value = '029.277.149-59';
                     profissaoElement.value = 'AUXILIAR ADMINISTRATIVO';
                     break;
+                case 'Agil':
+                    nomeElement.value = 'GUSTAVO HENRIQUE DE MELO';
+                    cfpElement.value = '095.018.639-21';
+                    profissaoElement.value = 'SUPERVISORA ADMINISTRATIVO';
+                    break;
                 case 'Outros':
                     // Se a opção for "Outros", limpar os campos
                     nomeElement.value = '';
@@ -74,59 +79,59 @@
         <h1>Dados do Cliente</h1>
         <div class="layout">
             <form action="processar.php" method="post">
-                <label for="nome">Nome:</label>
+                <label for="nome">Nome:<span class="required">*</span></label>
                 <input type="text" name="nome" required><br>
 
-                <label for="nacionalidade">Nacionalidade:</label>
+                <label for="nacionalidade">Nacionalidade:<span class="required">*</span></label>
                 <input type="text" name="nacionalidade" value="Brasileiro(a)" required><br>
 
-                <label for="estadoCivil">Estado Civil:</label>
+                <label for="estadoCivil">Estado Civil:<span class="required">*</span></label>
                 <input type="text" name="estadoCivil" required><br>
 
-                <label for="profissao">Profissão:</label>
+                <label for="profissao">Profissão:<span class="required">*</span></label>
                 <input type="text" name="profissao" required><br>
 
-                <label for="fone">Fone:</label>
+                <label for="fone">Fone:<span class="required">*</span></label>
                 <input type="text" name="fone" required maxlength="15" oninput="formatarTelefone(this)">
 
                 <label for="fone">Fone Recado:</label>
                 <input type="text" name="fone_recado" maxlength="15" oninput="formatarTelefone(this)"><br>
 
-                <label for="cpf">CPF:</label>
+                <label for="cpf">CPF:<span class="required">*</span></label>
                 <input type="text" name="cpf" required maxlength="14" oninput="formatarCPF(this)"><br>
 
-                <label for="rg">RG:</label>
+                <label for="rg">RG:<span class="required">*</span></label>
                 <input type="text" name="rg" required><br>
 
-                <label for="endereco">Endereço:</label>
+                <label for="endereco">Endereço:<span class="required">*</span></label>
                 <input type="text" name="endereco" required><br>
 
-                <label for="bairro">Bairro:</label>
+                <label for="bairro">Bairro:<span class="required">*</span></label>
                 <input type="text" name="bairro" required><br>
 
-                <label for="cep">CEP:</label>
+                <label for="cep">CEP:<span class="required">*</span></label>
                 <input type="text" name="cep" required maxlength="10" oninput="formatarCEP(this)"><br>
 
-                <label for="cidade">Cidade:</label>
+                <label for="cidade">Cidade:<span class="required">*</span></label>
                 <input type="text" name="cidade" required><br>
 
-                <label for="estado">Estado:</label>
+                <label for="estado">Estado:<span class="required">*</span></label>
                 <input type="text" name="estado" required><br>
 
-                <label for="data_nascimento">Data de Nascimento:</label>
+                <label for="data_nascimento">Data de Nascimento:<span class="required">*</span></label>
                 <input type="date" name="data_nascimento" required><br>
 
-                <label for="data">Data:</label>
+                <label for="data">Data:<span class="required">*</span></label>
                 <input type="date" name="data" id="data" required><br>
 
                 <button type="submit">Gerar documentos</button>
-            
-            <div class="abaButton">
-                <button type="button" class="ButtonAba" onclick="mostrarAba('aba1')">Cliente</button>
-                <button type="button" class="ButtonAba" onclick="mostrarAba('aba2')">Consultoria</button>
-                <button type="button" class="ButtonAba" onclick="mostrarAba('aba3')">Acidente</button>
-                <button type="button" class="ButtonAba" onclick="mostrarAba('aba4')">Documentos</button>
-            </div>
+
+                <div class="abaButton">
+                    <button type="button" class="ButtonAba" onclick="mostrarAba('aba1')">Cliente</button>
+                    <button type="button" class="ButtonAba" onclick="mostrarAba('aba2')">Consultoria</button>
+                    <button type="button" class="ButtonAba" onclick="mostrarAba('aba3')">Acidente</button>
+                    <button type="button" class="ButtonAba" onclick="mostrarAba('aba4')">Documentos</button>
+                </div>
         </div>
     </div>
 
@@ -134,30 +139,31 @@
     <div class="aba" id="aba2" style="display: none;">
         <h1>Dados da Consultoria</h1>
         <div class="layout">
-                <label for="consultoria">Consultoria:</label>
-                <select id="consultoria" name="consultoria" onchange="preencherCampos()">
-                    <option value="Outros" selected>Selecione uma opção</option>
-                    <option value="CETPrev">CET Prev</option>
-                    <option value="Facil">Fácil</option>
-                    <option value="FacilItajai">Fácil Itajaí</option>
-                    <option value="CruzEMelo">Cruz e Melo</option>
-                </select><br>
+            <label for="consultoria">Consultoria:<span class="required">*</span></label>
+            <select id="consultoria" name="consultoria" onchange="preencherCampos()">
+                <option value="Outros" selected>Selecione uma opção</option>
+                <option value="CETPrev">CET Prev</option>
+                <option value="Facil">Fácil</option>
+                <option value="FacilItajai">Fácil Itajaí</option>
+                <option value="CruzEMelo">Cruz e Melo</option>
+                <option value="Agil">Ágil</option>
+            </select><br>
 
-                <label for="responsavel">Responsável:</label>
-                <input type="text" id="responsavel" name="responsavel" required><br>
+            <label for="responsavel">Responsável:<span class="required">*</span></label>
+            <input type="text" id="responsavel" name="responsavel" required><br>
 
-                <label for="cpfResponsavel">CPF:</label>
-                <input type="text" id="cpfResponsavel" name="cpfResponsavel" maxlength="14" required
-                    oninput="formatarCPF(this)"><br>
+            <label for="cpfResponsavel">CPF:<span class="required">*</span></label>
+            <input type="text" id="cpfResponsavel" name="cpfResponsavel" maxlength="14" required
+                oninput="formatarCPF(this)"><br>
 
-                <label for="profissaoResponsavel">Profissão:</label>
-                <input type="text" id="profissaoResponsavel" name="profissaoResponsavel" required><br>
+            <label for="profissaoResponsavel">Profissão:<span class="required">*</span></label>
+            <input type="text" id="profissaoResponsavel" name="profissaoResponsavel" required><br>
 
-                <label for="consultor">Consultor:</label>
-                <input type="text" name="consultor"><br>
+            <label for="consultor">Consultor:</label>
+            <input type="text" name="consultor"><br>
 
-                <button type="submit">Gerar documentos</button>
-            
+            <button type="submit">Gerar documentos</button>
+
             <div class="abaButton">
                 <button type="button" class="ButtonAba" onclick="mostrarAba('aba1')">Cliente</button>
                 <button type="button" class="ButtonAba" onclick="mostrarAba('aba2')">Consultoria</button>
@@ -171,41 +177,43 @@
     <div class="aba" id="aba3" style="display: none;">
         <h1>Dados do Acidente</h1>
         <div class="layout">
-                <label for="profissaoEpoca">Profissão da época do acidente:</label>
-                <input type="text" name="profissaoEpoca"><br>
+            <label for="profissaoEpoca">Profissão da época do acidente:</label>
+            <input type="text" name="profissaoEpoca"><br>
 
-                <label for="funcaoDesempenhava">Função que desempenhava:</label>
-                <input type="text" name="funcaoDesempenhava"><br>
+            <label for="funcaoDesempenhava">Função que desempenhava:</label>
+            <input type="text" name="funcaoDesempenhava"><br>
 
-                <label for="dataAcidente">Data do acidente:</label>
-                <input type="text" name="dataAcidente"><br>
+            <label for="dataAcidente">Data do acidente:</label>
+            <input type="text" name="dataAcidente"><br>
 
-                <label for="afastouInss">Afastou pelo INSS:</label>
-                <label class="labelRadio"><input type="radio" name="afastouInss" value="sim">Sim</label>
-                <label class="labelRadio"><input type="radio" name="afastouInss" value="nao">Não</label>
-                <br>
+            <label for="afastouInss">Afastou pelo INSS:</label>
+            <label class="labelRadio"><input type="radio" name="afastouInss" value="sim">Sim</label>
+            <label class="labelRadio"><input type="radio" name="afastouInss" value="nao">Não</label>
 
-                <label for="senhaInss">Senha do INSS:</label>
-                <input type="text" name="senhaInss"><br>
+            <label for="tempoAfastado" class="tempoAfastadoLabel">Tempo Afastado:</label>
+            <input type="text" name="tempoAfastado"><br>
 
-                <label for="hospital">Hospital que foi atendido:</label>
-                <input type="text" name="hospital"><br>
+            <label for="senhaInss">Senha do INSS:</label>
+            <input type="text" name="senhaInss"><br>
 
-                <label for="detalhesAcidente">Detalhes do acidente:</label>
-                <textarea id="detalhesAcidente" name="detalhesAcidente"
-                    style="width: 70%; height: 50px; overflow: auto;"></textarea><br>
+            <label for="hospital">Hospital que foi atendido:</label>
+            <input type="text" name="hospital"><br>
 
-                <label for="membrosAfetados">Membros afetados:</label>
-                <input type="text" name="membrosAfetados"><br>
+            <label for="detalhesAcidente">Detalhes do acidente:</label>
+            <textarea id="detalhesAcidente" name="detalhesAcidente"
+                style="width: 70%; height: 50px; overflow: auto;"></textarea><br>
 
-                <label for="tipoAcidente">Tipo de acidente:</label>
-                <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Trabalho">Trabalho</label>
-                <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Trânsito">Trânsito</label>
-                <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Doméstico">Doméstico</label>
-                <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Outros">Outros</label>
+            <label for="membrosAfetados">Membros afetados:</label>
+            <input type="text" name="membrosAfetados"><br>
 
-                <button type="submit">Gerar documentos</button>
-            
+            <label for="tipoAcidente">Tipo de acidente:</label>
+            <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Trabalho">Trabalho</label>
+            <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Trânsito">Trânsito</label>
+            <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Doméstico">Doméstico</label>
+            <label class="labelRadio"><input type="radio" name="tipoAcidente" value="Outros">Outros</label>
+
+            <button type="submit">Gerar documentos</button>
+
             <div class="abaButton">
                 <button type="button" class="ButtonAba" onclick="mostrarAba('aba1')">Cliente</button>
                 <button type="button" class="ButtonAba" onclick="mostrarAba('aba2')">Consultoria</button>
@@ -223,73 +231,73 @@
     <div class="aba" id="aba4" style="display: none;">
         <h1>Documentos Pessoais e Médico</h1>
         <div class="layout">
-                <div class="FormEntregue">
-                    <div class="FormEntregueUm">
-                        <label for="rgoucnh">RG ou CNH:</label>
-                        <label class="labelRadio"><input type="radio" name="rgoucnh" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="rgoucnh" value="">Não</label><br>
+            <div class="FormEntregue">
+                <div class="FormEntregueUm">
+                    <label for="rgoucnh">RG ou CNH:</label>
+                    <label class="labelRadio"><input type="radio" name="rgoucnh" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="rgoucnh" value="">Não</label><br>
 
-                        <label for="cpfEntregue">CPF:</label>
-                        <label class="labelRadio"><input type="radio" name="cpfEntregue" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="cpfEntregue" value="">Não</label><br>
+                    <label for="cpfEntregue">CPF:</label>
+                    <label class="labelRadio"><input type="radio" name="cpfEntregue" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="cpfEntregue" value="">Não</label><br>
 
-                        <label for="residencia">Comprovante de Residência:</label>
-                        <label class="labelRadio"><input type="radio" name="residencia" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="residencia" value="">Não</label><br>
+                    <label for="residencia">Comprovante de Residência:</label>
+                    <label class="labelRadio"><input type="radio" name="residencia" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="residencia" value="">Não</label><br>
 
-                        <label for="cnis">CNIS:</label>
-                        <label class="labelRadio"><input type="radio" name="cnis" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="cnis" value="">Não</label><br>
+                    <label for="cnis">CNIS:</label>
+                    <label class="labelRadio"><input type="radio" name="cnis" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="cnis" value="">Não</label><br>
 
-                        <label for="ctps">CTPS:</label>
-                        <label class="labelRadio"><input type="radio" name="ctps" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="ctps" value="">Não</label><br>
+                    <label for="ctps">CTPS:</label>
+                    <label class="labelRadio"><input type="radio" name="ctps" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="ctps" value="">Não</label><br>
 
-                        <label for="extrato">Extrato de Benefício:</label>
-                        <label class="labelRadio"><input type="radio" name="extrato" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="extrato" value="">Não</label><br>
+                    <label for="extrato">Extrato de Benefício:</label>
+                    <label class="labelRadio"><input type="radio" name="extrato" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="extrato" value="">Não</label><br>
 
-                        <label for="laudoMedicoInss">Laudo Médico INSS:</label>
-                        <label class="labelRadio"><input type="radio" name="laudoMedicoInss" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="laudoMedicoInss" value="">Não</label><br>
+                    <label for="laudoMedicoInss">Laudo Médico INSS:</label>
+                    <label class="labelRadio"><input type="radio" name="laudoMedicoInss" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="laudoMedicoInss" value="">Não</label><br>
 
-                        <label for="copiaprocesso">Cópia Processo ADM:</label>
-                        <label class="labelRadio"><input type="radio" name="copiaprocesso" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="copiaprocesso" value="">Não</label><br>
-                    </div>
-
-                    <div class="FormEntregueDois">
-                        <label for="raiox">Raio X:</label>
-                        <label class="labelRadio"><input type="radio" name="raiox" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="raiox" value="">Não</label><br>
-
-                        <label for="ressonancia">Ressonância:</label>
-                        <label class="labelRadio"><input type="radio" name="ressonancia" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="ressonancia" value="">Não</label><br>
-
-                        <label for="exames">Exames:</label>
-                        <label class="labelRadio"><input type="radio" name="exames" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="exames" value="">Não</label><br>
-
-                        <label for="prontuario">Prontuário Médico:</label>
-                        <label class="labelRadio"><input type="radio" name="prontuario" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="prontuario" value="">Não</label><br>
-
-                        <label for="laudoMedico">Laudo Médico:</label>
-                        <label class="labelRadio"><input type="radio" name="laudoMedico" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="laudoMedico" value="">Não</label><br>
-
-                        <label for="cat">CAT:</label>
-                        <label class="labelRadio"><input type="radio" name="cat" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="cat" value="">Não</label><br>
-
-                        <label for="bo">Boletim de Ocorrência:</label>
-                        <label class="labelRadio"><input type="radio" name="bo" value="OK">Sim</label>
-                        <label class="labelRadio"><input type="radio" name="bo" value="">Não</label><br>
-                    </div>
+                    <label for="copiaprocesso">Cópia Processo ADM:</label>
+                    <label class="labelRadio"><input type="radio" name="copiaprocesso" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="copiaprocesso" value="">Não</label><br>
                 </div>
 
-                <button type="submit">Gerar documentos</button>
+                <div class="FormEntregueDois">
+                    <label for="raiox">Raio X:</label>
+                    <label class="labelRadio"><input type="radio" name="raiox" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="raiox" value="">Não</label><br>
+
+                    <label for="ressonancia">Ressonância:</label>
+                    <label class="labelRadio"><input type="radio" name="ressonancia" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="ressonancia" value="">Não</label><br>
+
+                    <label for="exames">Exames:</label>
+                    <label class="labelRadio"><input type="radio" name="exames" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="exames" value="">Não</label><br>
+
+                    <label for="prontuario">Prontuário Médico:</label>
+                    <label class="labelRadio"><input type="radio" name="prontuario" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="prontuario" value="">Não</label><br>
+
+                    <label for="laudoMedico">Laudo Médico:</label>
+                    <label class="labelRadio"><input type="radio" name="laudoMedico" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="laudoMedico" value="">Não</label><br>
+
+                    <label for="cat">CAT:</label>
+                    <label class="labelRadio"><input type="radio" name="cat" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="cat" value="">Não</label><br>
+
+                    <label for="bo">Boletim de Ocorrência:</label>
+                    <label class="labelRadio"><input type="radio" name="bo" value="OK">Sim</label>
+                    <label class="labelRadio"><input type="radio" name="bo" value="">Não</label><br>
+                </div>
+            </div>
+
+            <button type="submit">Gerar documentos</button>
 
             </form>
 

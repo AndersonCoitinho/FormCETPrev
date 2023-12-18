@@ -9,6 +9,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Aws\S3\S3Client;
 
 /* CONFIG AWS */
+/*
 $config = [
     'region' => $_ENV['AWS_REGION'], 
     'version' => 'latest',   
@@ -18,6 +19,7 @@ $config = [
     ],
 ];
 $s3 = new S3Client($config);
+*/
 
 // VIZUALIZAR OS POST
 /*
@@ -55,6 +57,7 @@ $profissaoEpoca = mb_strtoupper($_POST["profissaoEpoca"], 'UTF-8');
 $funcaoDesempenhava = mb_strtoupper($_POST["funcaoDesempenhava"], 'UTF-8');
 $dataAcidente = mb_strtoupper($_POST["dataAcidente"], 'UTF-8'); 
 $afastouInss = isset($_POST['afastouInss']) ? mb_strtoupper($_POST['afastouInss'], 'UTF-8') : '';
+$tempoAfastado = mb_strtoupper($_POST["tempoAfastado"], 'UTF-8');
 $senhaInss = mb_strtoupper($_POST["senhaInss"], 'UTF-8');
 $hospital = mb_strtoupper($_POST["hospital"], 'UTF-8');
 $detalhesAcidente = mb_strtoupper($_POST["detalhesAcidente"], 'UTF-8');
@@ -183,6 +186,7 @@ foreach ($documentos as $documento) {
     $templateProcessor->setValue('{{funcaoDesempenhava}}', $funcaoDesempenhava);
     $templateProcessor->setValue('{{dataAcidente}}', $dataAcidente);
     $templateProcessor->setValue('{{afastouInss}}', $afastouInss);
+    $templateProcessor->setValue('{{tempoAfastado}}', $tempoAfastado);
     $templateProcessor->setValue('{{senhaInss}}', $senhaInss);
     $templateProcessor->setValue('{{hospital}}', $hospital);
     $templateProcessor->setValue('{{detalhesAcidente}}', $detalhesAcidente);
@@ -215,11 +219,13 @@ foreach ($documentos as $documento) {
     $conteudoArquivo = file_get_contents($documento['saida']);
 
     /* LOCAL DE UPLOAD NO AWS */
+    /*
     $s3->putObject([
         'Bucket' => 'cetprev-documentos',
         'Key' =>  $nomeArquivo, //Caminho desejado no S3
         'Body' => $conteudoArquivo,
     ]);
+    */
 }
 ?>
 
