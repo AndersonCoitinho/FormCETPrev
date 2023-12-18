@@ -137,6 +137,12 @@ $documentos = [
         'titulo' => 'MINUTA AUXILIO ACIDENTE FEDERAL - ' .$nome
     ],
     [
+        'modelo' => './modelos/minutaAuxilioAcidenteCatEstadual.docx',
+        'saida' => './novo/MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome . '.docx',
+        'bucket' => 'MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome . '.docx',
+        'titulo' => 'MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome
+    ],
+    [
         'modelo' => './modelos/procuracao.docx',
         'saida' => './novo/PROCURAÇÃO - ' .$nome . '.docx',
         'bucket' => 'PROCURAÇÃO - ' .$nome . '.docx',
