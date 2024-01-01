@@ -30,9 +30,8 @@ th, td {
     text-align: left;
 }
 
-
 button{
-    background-color: #007bff;
+    background-color: #5c0f1e;
     color: white;
     padding: 10px;
     border: none;
@@ -41,13 +40,13 @@ button{
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #981630;
 }
 
 #assinatura{
     text-decoration: none;
     color: #fff;
-    background-color: #007bff;
+    background-color: #5c0f1e;
     padding: 10px;
     margin-top: 10px;
     border-radius: 4px;
@@ -55,41 +54,38 @@ button:hover {
 }
 
 #assinatura:hover {
-    background-color: #0056b3;
+    background-color: #981630;
 }
 
-    /* Estilização para o fundo escuro semitransparente */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-    /* Estilização para o "quadrado" que contém as informações */
-    .popup {
-        background-color: #fff; /* Fundo branco */
-        padding: 20px;
-        border-radius: 10px;
-        width: 400px; /* Largura do "quadrado" */
-        text-align: center;
-        z-index: 1001; /* Garante que está acima do fundo escuro */
-        position: relative;
-    }
+.popup {
+    background-color: #fff; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    z-index: 1001;
+    position: relative;
+}
 
-
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-    }
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
 
 #table-download{
     width: auto;
@@ -101,12 +97,16 @@ button:hover {
 }
 
 #download{
-    background-color: #007bff; 
+    background-color: #5c0f1e; 
     color: #fff; 
     padding: 5px 10px; 
     border: none; 
     border-radius: 4px; 
     cursor: pointer;
+}
+
+#download:hover{
+    background-color: #981630;
 }
 
 #collum-name{
