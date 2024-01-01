@@ -26,7 +26,6 @@ h1 {
 }
 
 .FormEntregue{
-    //background-color: yellow;
     display: flex;
     gap: 50px;
 }

@@ -1,7 +1,6 @@
 {
     "require": {
         "phpoffice/phpword": "^0.18.0",
-        "aws/aws-sdk-php": "^3.283",
         "vlucas/phpdotenv": "^5.5"
     }
 }

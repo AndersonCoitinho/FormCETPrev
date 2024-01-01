@@ -1,25 +1,8 @@
 <?php
 require_once 'vendor/autoload.php'; // Carregue a biblioteca PHPWord
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
-use Aws\S3\S3Client;
-
-/* CONFIG AWS */
-/*
-$config = [
-    'region' => $_ENV['AWS_REGION'], 
-    'version' => 'latest',   
-    'credentials' => [
-        'key' => $_ENV['AWS_ACCESS_KEY_ID'],
-        'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
-    ],
-];
-$s3 = new S3Client($config);
-*/
 
 // VIZUALIZAR OS POST
 /*
@@ -27,6 +10,8 @@ echo '<pre>';
 print_r($_POST);
 echo '</pre>';
 */
+
+session_start();
 
 /* ARMAZENA OS DADOS */
 $nome = mb_strtoupper($_POST["nome"], 'UTF-8');
@@ -80,7 +65,10 @@ $laudoMedico = isset($_POST['laudoMedico']) ? $_POST['laudoMedico'] : '';
 $cat = isset($_POST['cat']) ? $_POST['cat'] : '';
 $bo = isset($_POST['bo']) ? $_POST['bo'] : '';
 
-
+$_SESSION['nome'] = $nome;
+$_SESSION['fone'] = $fone;
+$_SESSION['cpf'] = $cpf;
+$_SESSION['data_nascimento'] = $data_nascimento;
 
 $timestamp = strtotime($data); // Converte a data para um timestamp
 if ($timestamp !== false) {
@@ -96,7 +84,7 @@ $dataPorExtensoString = $dataPorExtenso->format($timestamp);
 
 
 // Limpe o diretório de saída antes de gerar novos documentos
-$directory = './novo/';
+$directory = './cliente/';
 $files = glob($directory . '*'); // Obtém todos os arquivos no diretório
 
 foreach ($files as $file) {
@@ -108,55 +96,55 @@ foreach ($files as $file) {
 $documentos = [
     [
         'modelo' => './modelos/capaProcesso.docx',
-        'saida' => './novo/CAPA DO PROCESSO - ' .$nome . '.docx',
+        'saida' => './cliente/CAPA DO PROCESSO - ' .$nome . '.docx',
         'bucket' => 'CAPA DO PROCESSO - ' .$nome . '.docx',
         'titulo' => 'CAPA DO PROCESSO - ' .$nome
     ],
     [
         'modelo' => './modelos/contratoHonorarios.docx',
-        'saida' => './novo/CONTRATO HONORÁRIO - ' .$nome . '.docx',
+        'saida' => './cliente/CONTRATO HONORÁRIO - ' .$nome . '.docx',
         'bucket' => 'CONTRATO HONORÁRIO - ' .$nome . '.docx',
         'titulo' => 'CONTRATO HONORÁRIO - ' .$nome
     ],
     [
         'modelo' => './modelos/declaracaoDeResidencia.docx',
-        'saida' => './novo/DECLARAÇÃO DE RESIDENCIA - ' .$nome . '.docx',
+        'saida' => './cliente/DECLARAÇÃO DE RESIDENCIA - ' .$nome . '.docx',
         'bucket' => 'DECLARAÇÃO DE RESIDENCIA - ' .$nome . '.docx',
         'titulo' => 'DECLARAÇÃO DE RESIDENCIA - ' .$nome
     ],
     [
         'modelo' => './modelos/justicagratuita.docx',
-        'saida' => './novo/JUSTIÇA GRATUITA - ' .$nome . '.docx',
+        'saida' => './cliente/JUSTIÇA GRATUITA - ' .$nome . '.docx',
         'bucket' => 'JUSTIÇA GRATUITA - ' .$nome . '.docx',
         'titulo' => 'JUSTIÇA GRATUITA - ' .$nome
     ],
     [
         'modelo' => './modelos/minutaAuxilioAcidenteFederal.docx',
-        'saida' => './novo/MINUTA AUXILIO ACIDENTE FEDERAL - ' .$nome . '.docx',
+        'saida' => './cliente/MINUTA AUXILIO ACIDENTE FEDERAL - ' .$nome . '.docx',
         'bucket' => 'MINUTA AUXILIO ACIDENTE FEDERAL - ' .$nome . '.docx',
         'titulo' => 'MINUTA AUXILIO ACIDENTE FEDERAL - ' .$nome
     ],
     [
         'modelo' => './modelos/minutaAuxilioAcidenteCatEstadual.docx',
-        'saida' => './novo/MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome . '.docx',
+        'saida' => './cliente/MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome . '.docx',
         'bucket' => 'MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome . '.docx',
         'titulo' => 'MINUTA AUXILIO ACIDENTE ESTADUAL - ' .$nome
     ],
     [
         'modelo' => './modelos/procuracao.docx',
-        'saida' => './novo/PROCURAÇÃO - ' .$nome . '.docx',
+        'saida' => './cliente/PROCURAÇÃO - ' .$nome . '.docx',
         'bucket' => 'PROCURAÇÃO - ' .$nome . '.docx',
         'titulo' => 'PROCURAÇÃO - ' .$nome
     ],
     [
         'modelo' => './modelos/requerimentoAdmAuxilioAcidente.docx',
-        'saida' => './novo/REQUERIMENTO ADMINISTRATIVO AUXILIO ACIDENTE - ' .$nome . '.docx',
+        'saida' => './cliente/REQUERIMENTO ADMINISTRATIVO AUXILIO ACIDENTE - ' .$nome . '.docx',
         'bucket' => 'REQUERIMENTO ADMINISTRATIVO AUXILIO ACIDENTE - ' .$nome . '.docx',
         'titulo' => 'REQUERIMENTO ADMINISTRATIVO AUXILIO ACIDENTE - ' .$nome
     ],
     [
         'modelo' => './modelos/termoDeRenuncia.docx',
-        'saida' => './novo/TERMO DE RENÚNCIA - ' .$nome . '.docx',
+        'saida' => './cliente/TERMO DE RENÚNCIA - ' .$nome . '.docx',
         'bucket' => 'TERMO DE RENÚNCIA - ' .$nome . '.docx',
         'titulo' => 'TERMO DE RENÚNCIA - ' .$nome
     ],
@@ -223,105 +211,216 @@ foreach ($documentos as $documento) {
     
     $nomeArquivo = basename($documento['saida']);
     $conteudoArquivo = file_get_contents($documento['saida']);
-
-    /* LOCAL DE UPLOAD NO AWS */
-    /*
-    $s3->putObject([
-        'Bucket' => 'cetprev-documentos',
-        'Key' =>  $nomeArquivo, //Caminho desejado no S3
-        'Body' => $conteudoArquivo,
-    ]);
-    */
 }
+
 ?>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Download de Documentos</title>
+    <title>Documentos</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/Processar.css">
+    <script src="./js/utils.js"></script>
+
+    <style>
+    /* Estilização para o fundo escuro semitransparente */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    /* Estilização para o "quadrado" que contém as informações */
+    .popup {
+        background-color: #fff; /* Fundo branco */
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px; /* Largura do "quadrado" */
+        text-align: center;
+        z-index: 1001; /* Garante que está acima do fundo escuro */
+        position: relative;
+    }
+
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
+
+    <button onclick="downloadTodos()">Download de todos os documentos</button>
+
+    <button id="copiarDados" onclick="copiarDados()">Copiar dados para planilha</button>
+    
+    <!--<a id="assinatura" href="./clicksign.php?
+        documento1=<?php echo urlencode($documentos[1]['saida']); ?>&
+        documento2=<?php echo urlencode($documentos[2]['saida']); ?>&
+        documento3=<?php echo urlencode($documentos[3]['saida']); ?>&
+        documento6=<?php echo urlencode($documentos[6]['saida']); ?>">Enviar documentos para assinatura
+    </a>-->
+
+ 
+
+    <a id="assinatura" href="javascript:void(0);" onclick="openPopup()">
+    Enviar documentos para assinatura
+    </a>
+    
+
+    <!-- Elemento de sobreposição -->
+    <div id="overlay" class="overlay">
+        <!-- "Quadrado" que contém as informações -->
+        <div id="popup" class="popup">
+            <!-- Botão de fechar -->
+            <span class="close-button" onclick="closeAssinaturaPopup()">X</span>
+            <!-- Conteúdo do "quadrado" -->
+            <form action="./clicksign.php" method="post">
+
+                    <label for="foneEnvio">Telefone para envio:</span></label>
+                    <input type="text" name="foneEnvio" value="<?php echo $fone; ?>" required><br>
+                    
+                
+                Forma de autenticação: 
+                <br>
+                <br><br>
+                <button type="submit" onclick="openAssinaturaPopup()">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAssinaturaPopup() {
+            var url = "./clicksign.php?" +
+                "documento1=" + encodeURIComponent('<?php echo $documentos[1]['saida']; ?>') +
+                "&documento2=" + encodeURIComponent('<?php echo $documentos[2]['saida']; ?>') +
+                "&documento3=" + encodeURIComponent('<?php echo $documentos[3]['saida']; ?>') +
+                "&documento6=" + encodeURIComponent('<?php echo $documentos[6]['saida']; ?>');
+
+            // Exibe a sobreposição
+            document.getElementById('overlay').style.display = 'flex';
+
+            // Adiciona um iframe ao popup para carregar a página clicksign.php
+            var iframe = document.createElement("iframe");
+            iframe.src = url;
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "none";
+
+            // Adiciona o iframe ao conteúdo do popup
+            document.getElementById('popup').innerHTML = "";
+            document.getElementById('popup').appendChild(iframe);
+
+
+            // Adiciona um botão de fechar
+            var closeButton = document.createElement("button");
+            closeButton.innerHTML = "Fechar";
+            closeButton.onclick = function () {
+                closeAssinaturaPopup();
+            };
+
+            // Adiciona o botão de fechar à janela do popup
+            document.getElementById('popup').appendChild(closeButton);
+        }
+
+        function openPopup() {
+        // Exibe a sobreposição
+        document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeAssinaturaPopup() {
+            // Oculta a sobreposição
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        
+        function enviarDocumentos() {
+            // Simule uma operação assíncrona (substitua isso com a lógica real)
+            setTimeout(function () {
+                // Carregar a página clicksign.php dentro da pop-up
+                fetch('./clicksign.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        // Exibir o conteúdo da página na pop-up
+                        document.getElementById('popup').innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar a página clicksign.php:', error);
+                    });
+            }, 2000); // Aguarde 2 segundos (substitua isso com o tempo real de conclusão)
+        }
+    </script>
+
+
     <h1>Documentos Gerados:</h1>
-    <?php foreach ($documentos as $documento): ?>
-        <p>Arquivo: <?php echo $documento['titulo']; ?><a href="<?php echo $documento['saida']; ?>" download><br>Download</a></p>
-    <?php endforeach; ?>
-    <h2>Para a Planilha:</h2>
-<table border="1">
-    <tr>
-        <td>Nome</td>
-        <td>Estado Civil</td>
-        <td>Profissão</td>
-        <td>Telefone</td>
-        <td>Tel Recado</td>
-        <td>CPF</td>
-        <td>RG</td>
-        <td>Endereço</td>
-        <td>Bairro</td>
-        <td>Cidade</td>
-        <td>UF</td>
-        <td>CEP</td>
-        <td>Data Nascimento</td>
-        <td>Data Contrato</td>
-        <td>Consultor</td>
-    </tr>
-    <tr>
-            <td id="nome" data-copy="<?php echo $nome; ?>"><?php echo $nome; ?></td>
-            <td id="estadoCivil" data-copy="<?php echo $estadoCivil; ?>"><?php echo $estadoCivil; ?></td>
-            <td id="profissao" data-copy="<?php echo $profissao; ?>"><?php echo $profissao; ?></td>
-            <td id="fone" data-copy="<?php echo $fone; ?>"><?php echo $fone; ?></td>
-            <td id="fone_recado" data-copy="<?php echo $fone_recado; ?>"><?php echo $fone_recado; ?></td>
-            <td id="cpf" data-copy="<?php echo $cpf; ?>"><?php echo $cpf; ?></td>
-            <td id="rg" data-copy="<?php echo $rg; ?>"><?php echo $rg; ?></td>
-            <td id="endereco" data-copy="<?php echo $endereco; ?>"><?php echo $endereco; ?></td>
-            <td id="bairro" data-copy="<?php echo $bairro; ?>"><?php echo $bairro; ?></td>
-            <td id="cidade" data-copy="<?php echo $cidade; ?>"><?php echo $cidade; ?></td>
-            <td id="estado" data-copy="<?php echo $estado; ?>"><?php echo $estado; ?></td>
-            <td id="cep" data-copy="<?php echo $cep; ?>"><?php echo $cep; ?></td>
-            <td id="dataFormatadaNascimento" data-copy="<?php echo $dataFormatadaNascimento; ?>"><?php echo $dataFormatadaNascimento; ?></td>
-            <td id="dataFormatadaContrato" data-copy="<?php echo $dataFormatadaContrato; ?>"><?php echo $dataFormatadaContrato; ?></td>
-            <td id="consultor" data-copy="<?php echo $consultor; ?>"><?php echo $consultor; ?></td>
-    </tr>
-</table>
+        <?php foreach ($documentos as $documento): ?>
+            <!-- <p>Arquivo: <?php echo $documento['titulo']; ?><a href="<?php echo $documento['saida']; ?>" download>Download</a></p> -->
+            <table style="width: auto;">
+                <tr>
+                    <td style="white-space: nowrap; border: 1px solid #ddd;">
+                        <a href="<?php echo $documento['saida']; ?>" class="download-button" download>
+                            <button style="background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer;">
+                                Download
+                            </button>
+                        </a>
+                    </td>
+                    <td style="white-space: nowrap; border: 1px solid #ddd;" class="title-cell">
+                        <div style="display: flex; align-items: center;">
+                            <p style="margin-right: 10px;">Documento: <?php echo $documento['titulo']; ?></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <?php endforeach; ?>
 
-<button id="copiarDados" onclick="copiarDados()">Copiar Dados</button>
-<script>
-    function copiarDados() {
-        var campos = [
-            document.getElementById('nome').textContent,
-            document.getElementById('estadoCivil').textContent,
-            document.getElementById('profissao').textContent,
-            document.getElementById('fone').textContent,
-            document.getElementById('fone_recado').textContent,
-            document.getElementById('cpf').textContent,
-            document.getElementById('rg').textContent,
-            document.getElementById('endereco').textContent,
-            document.getElementById('bairro').textContent,
-            document.getElementById('cidade').textContent,
-            document.getElementById('estado').textContent,
-            document.getElementById('cep').textContent,
-            document.getElementById('dataFormatadaNascimento').textContent,
-            document.getElementById('dataFormatadaContrato').textContent,
-            '',
-            document.getElementById('consultor').textContent,
-        ];
-
-        var dadosExcel = campos.join('\t');
-        // Cria um elemento de input
-        var inputElement = document.createElement('input');
-        inputElement.setAttribute('value', dadosExcel);
-        // Anexa o elemento de input à página
-        document.body.appendChild(inputElement);
-        // Seleciona o texto no input
-        inputElement.select();
-        // Copia o texto para a área de transferência
-        document.execCommand('copy');
-        // Remove o elemento de input
-        document.body.removeChild(inputElement);
-        alert('Dados copiados para a área de transferência');
-    }
-</script>
-
+    <table id="tabela-dados">
+        <tr>
+            <td>Nome</td>
+            <td>Estado Civil</td>
+            <td>Profissão</td>
+            <td>Telefone</td>
+            <td>Tel Recado</td>
+            <td>CPF</td>
+            <td>RG</td>
+            <td>Endereço</td>
+            <td>Bairro</td>
+            <td>Cidade</td>
+            <td>UF</td>
+            <td>CEP</td>
+            <td>Data Nascimento</td>
+            <td>Data Contrato</td>
+            <td>Consultor</td>
+        </tr>
+        <tr>
+                <td id="nome" data-copy="<?php echo $nome; ?>"><?php echo $nome; ?></td>
+                <td id="estadoCivil" data-copy="<?php echo $estadoCivil; ?>"><?php echo $estadoCivil; ?></td>
+                <td id="profissao" data-copy="<?php echo $profissao; ?>"><?php echo $profissao; ?></td>
+                <td id="fone" data-copy="<?php echo $fone; ?>"><?php echo $fone; ?></td>
+                <td id="fone_recado" data-copy="<?php echo $fone_recado; ?>"><?php echo $fone_recado; ?></td>
+                <td id="cpf" data-copy="<?php echo $cpf; ?>"><?php echo $cpf; ?></td>
+                <td id="rg" data-copy="<?php echo $rg; ?>"><?php echo $rg; ?></td>
+                <td id="endereco" data-copy="<?php echo $endereco; ?>"><?php echo $endereco; ?></td>
+                <td id="bairro" data-copy="<?php echo $bairro; ?>"><?php echo $bairro; ?></td>
+                <td id="cidade" data-copy="<?php echo $cidade; ?>"><?php echo $cidade; ?></td>
+                <td id="estado" data-copy="<?php echo $estado; ?>"><?php echo $estado; ?></td>
+                <td id="cep" data-copy="<?php echo $cep; ?>"><?php echo $cep; ?></td>
+                <td id="dataFormatadaNascimento" data-copy="<?php echo $dataFormatadaNascimento; ?>"><?php echo $dataFormatadaNascimento; ?></td>
+                <td id="dataFormatadaContrato" data-copy="<?php echo $dataFormatadaContrato; ?>"><?php echo $dataFormatadaContrato; ?></td>
+                <td id="consultor" data-copy="<?php echo $consultor; ?>"><?php echo $consultor; ?></td>
+        </tr>
+    </table>
 </body>
 </html>
 
