@@ -63,7 +63,6 @@ function copiarDados() {
     document.execCommand('copy');
     // Remove o elemento de input
     document.body.removeChild(inputElement);
-    alert('Dados copiados para a área de transferência');
 }
 
 function preencherCampos() {

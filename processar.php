@@ -212,7 +212,6 @@ foreach ($documentos as $documento) {
     $nomeArquivo = basename($documento['saida']);
     $conteudoArquivo = file_get_contents($documento['saida']);
 }
-
 ?>
 
 
@@ -223,62 +222,15 @@ foreach ($documentos as $documento) {
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./css/Processar.css">
     <script src="./js/utils.js"></script>
-
-    <style>
-    /* Estilização para o fundo escuro semitransparente */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    /* Estilização para o "quadrado" que contém as informações */
-    .popup {
-        background-color: #fff; /* Fundo branco */
-        padding: 20px;
-        border-radius: 10px;
-        width: 400px; /* Largura do "quadrado" */
-        text-align: center;
-        z-index: 1001; /* Garante que está acima do fundo escuro */
-        position: relative;
-    }
-
-
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-    }
-</style>
+    <link rel="icon" href="./icon/icon.jpeg" type="image/x-icon">
 </head>
 <body>
-
     <button onclick="downloadTodos()">Download de todos os documentos</button>
-
     <button id="copiarDados" onclick="copiarDados()">Copiar dados para planilha</button>
-    
-    <!--<a id="assinatura" href="./clicksign.php?
-        documento1=<?php echo urlencode($documentos[1]['saida']); ?>&
-        documento2=<?php echo urlencode($documentos[2]['saida']); ?>&
-        documento3=<?php echo urlencode($documentos[3]['saida']); ?>&
-        documento6=<?php echo urlencode($documentos[6]['saida']); ?>">Enviar documentos para assinatura
-    </a>-->
-
- 
-
     <a id="assinatura" href="javascript:void(0);" onclick="openPopup()">
     Enviar documentos para assinatura
     </a>
     
-
     <!-- Elemento de sobreposição -->
     <div id="overlay" class="overlay">
         <!-- "Quadrado" que contém as informações -->
@@ -287,14 +239,14 @@ foreach ($documentos as $documento) {
             <span class="close-button" onclick="closeAssinaturaPopup()">X</span>
             <!-- Conteúdo do "quadrado" -->
             <form action="./clicksign.php" method="post">
-
                     <label for="foneEnvio">Telefone para envio:</span></label>
                     <input type="text" name="foneEnvio" value="<?php echo $fone; ?>" required><br>
-                    
-                
-                Forma de autenticação: 
-                <br>
-                <br><br>
+                    <br>
+                    <label for="formaAutenticacao">Forma de autenticação:</label>
+                    <select id="formaAutenticacao" name="formaAutenticacao">
+                        <option value="Selfie">Selfie</option>
+                        <option value="assinaturaManuscrita">Assinatura Manuscrita</option>
+                    </select><br><br>
                 <button type="submit" onclick="openAssinaturaPopup()">Enviar</button>
             </form>
         </div>
@@ -365,24 +317,21 @@ foreach ($documentos as $documento) {
 
     <h1>Documentos Gerados:</h1>
         <?php foreach ($documentos as $documento): ?>
-            <!-- <p>Arquivo: <?php echo $documento['titulo']; ?><a href="<?php echo $documento['saida']; ?>" download>Download</a></p> -->
-            <table style="width: auto;">
+            <table id="table-download">
                 <tr>
-                    <td style="white-space: nowrap; border: 1px solid #ddd;">
+                    <td id="collum-download">
                         <a href="<?php echo $documento['saida']; ?>" class="download-button" download>
-                            <button style="background-color: #007bff; color: #fff; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer;">
+                            <button id="download">
                                 Download
                             </button>
                         </a>
                     </td>
-                    <td style="white-space: nowrap; border: 1px solid #ddd;" class="title-cell">
+                    <td id="collum-name" class="title-cell">
                         <div style="display: flex; align-items: center;">
                             <p style="margin-right: 10px;">Documento: <?php echo $documento['titulo']; ?></p>
                         </div>
                     </td>
                 </tr>
-            </table>
-        </div>
         <?php endforeach; ?>
 
     <table id="tabela-dados">

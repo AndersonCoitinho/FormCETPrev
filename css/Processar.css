@@ -57,3 +57,59 @@ button:hover {
 #assinatura:hover {
     background-color: #0056b3;
 }
+
+    /* Estilização para o fundo escuro semitransparente */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    /* Estilização para o "quadrado" que contém as informações */
+    .popup {
+        background-color: #fff; /* Fundo branco */
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px; /* Largura do "quadrado" */
+        text-align: center;
+        z-index: 1001; /* Garante que está acima do fundo escuro */
+        position: relative;
+    }
+
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+#table-download{
+    width: auto;
+}
+
+#collum-download{
+    white-space: nowrap; 
+    border: 1px solid #ddd;
+}
+
+#download{
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 5px 10px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+}
+
+#collum-name{
+    white-space: nowrap; 
+    border: 1px solid #ddd; 
+}
